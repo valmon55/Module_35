@@ -1,6 +1,10 @@
+using ASP.SocialNetwork.Data;
+using ASP.SocialNetwork.Models.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,6 +27,19 @@ namespace ASP.SocialNetwork
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<SocialNetworkDBContext>(options => options.UseSqlServer(connection));
+            services.AddIdentity<User, IdentityRole>(
+                opt =>
+                {
+                    opt.Password.RequiredLength = 5;
+                    opt.Password.RequireNonAlphanumeric = false;
+                    opt.Password.RequireDigit = false;
+                    opt.Password.RequireLowercase = false;
+                    opt.Password.RequireUppercase = false;
+                })
+                .AddEntityFrameworkStores<SocialNetworkDBContext>();
+
             services.AddControllersWithViews();
         }
 
@@ -44,6 +61,7 @@ namespace ASP.SocialNetwork
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
