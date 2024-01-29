@@ -1,0 +1,9 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using ASP.SocialNetwork.Models.DAL;
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <a asp-area="" asp-controller="AccountManager" asp-action="Logout">Выход</a>
+}
