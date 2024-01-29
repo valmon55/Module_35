@@ -1,4 +1,5 @@
-﻿using ASP.SocialNetwork.Models;
+﻿using ASP.SocialNetwork.Contracts;
+using ASP.SocialNetwork.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,7 +21,7 @@ namespace ASP.SocialNetwork.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(new MainViewModel());
         }
 
         public IActionResult Privacy()

@@ -1,0 +1,15 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using ASP.SocialNetwork.Models.DAL;
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+
+<div class="righ-align">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <form class="searchFrm" asp-area="" asp-controller="AccountManager" asp-action="UserList" method="get">
+            <i class="fa fa-search"></i>
+            <input type="text" placeholder="Поиск" name="search">
+        </form>
+    }
+</div>
